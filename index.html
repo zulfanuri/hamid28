@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ucapan untuk Hamid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #add8e6, #fffd99);
+      overflow: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: white;
+      animation: sparkle 3s linear infinite;
+      box-shadow: 0 0 8px white;
+    }
+
+    @keyframes sparkle {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(50vh) scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0.8);
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 90%;
+      width: 400px;
+      margin: 100px auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    #title {
+      font-size: 22px;
+      color: #0044cc;
+      font-weight: 600;
+    }
+
+    #message {
+      font-size: 18px;
+      color: #444;
+      margin-top: 20px;
+    }
+
+    #nextBtn, #sendBtn {
+      background-color: #fffd99;
+      color: #0044cc;
+      border: none;
+      padding: 12px 24px;
+      margin-top: 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    #nextBtn:hover, #sendBtn:hover {
+      background-color: #ffe;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #input-box {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #music-player {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background-color: #add8e6;
+    }
+
+    iframe {
+      width: 100%;
+      height: 80px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Musik -->
+  <div id="music-player">
+    <iframe src="https://open.spotify.com/embed/track/1UPB5rYJ0bzn6mNSoAHrZC?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+
+  <!-- Background animasi -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Konten utama -->
+  <div class="container">
+    <h1 id="title"></h1>
+    <p id="message"></p>
+
+    <div id="input-box">
+      <input type="text" id="wishInput" placeholder="Tulis ucapanmu di sini..." />
+      <a id="sendBtn" href="#" target="_blank">Kirim ucapanmu ya</a>
+    </div>
+
+    <button id="nextBtn">Next ➡️</button>
+  </div>
+
+  <script>
+    const titles = {
+      1: "🌟 Hari ini, 14 Mei 2025...",
+      2: "💌 Sebuah Ucapan Tulus Untukmu",
+      3: "🧁 Kenangan indah ini ada untukmu",
+      4: "🌈 Ada banyak harapan untukmu",
+      5: "🎁 Kirim ucapan hangat kalian untuk Hamid ya..!"
+    };
+
+    const messages = {
+      1: "Hai Hamid! Hari ini terasa berbeda ya? 🥳",
+      2: "Hari ini... usiamu genap 28 tahun! 🎂",
+      3: "Meski dunia begitu membuatmu lelah, tapi kamu tetap melangkah 💕",
+      4: "Langkahmu ke depan penuh warna dan berkah ya, aamiin! 🌟",
+      5: "Ketik di sini yaa~ 😁👇"
+    };
+
+    let scene = 1;
+    const totalScenes = 5;
+
+    const titleEl = document.getElementById("title");
+    const messageEl = document.getElementById("message");
+    const nextBtn = document.getElementById("nextBtn");
+    const inputBox = document.getElementById("input-box");
+    const sendBtn = document.getElementById("sendBtn");
+    const wishInput = document.getElementById("wishInput");
+
+    function updateScene() {
+      titleEl.innerText = titles[scene];
+      messageEl.innerText = messages[scene];
+
+      if (scene === 5) {
+        inputBox.style.display = "block";
+        nextBtn.style.display = "none";
+      } else {
+        inputBox.style.display = "none";
+        nextBtn.style.display = "inline-block";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (scene < totalScenes) {
+        scene++;
+        updateScene();
+      }
+    });
+
+    wishInput.addEventListener("input", () => {
+      const message = encodeURIComponent(wishInput.value);
+      const phoneNumber = "6289531312191"; // Ganti dengan nomor WA Hamid
+      sendBtn.href = `https://wa.me/${phoneNumber}?text=${message}`;
+    });
+
+    updateScene();
+
+    // Tambahkan animasi bintang warna-warni
+    const starsContainer = document.getElementById('stars');
+    const starColors = ['#FF99CC', '#99CCFF', '#FFFF99', '#CCFFCC', '#FFCCFF', '#FFD700', '#00FFFF'];
+
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * -100}%`;
+      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      const color = starColors[Math.floor(Math.random() * starColors.length)];
+      star.style.background = color;
+      star.style.boxShadow = `0 0 10px ${color}`;
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
